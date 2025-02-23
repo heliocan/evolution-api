@@ -1,17 +1,21 @@
 #!/bin/bash
 
+# Importa funções auxiliares (se necessário)
 source ./Docker/scripts/env_functions.sh
 
+# Verifica se o ambiente é Docker
 if [ "$DOCKER_ENV" != "true" ]; then
     export_env_vars
 fi
 
+# Verifica o provedor de banco de dados
 if [[ "$DATABASE_PROVIDER" == "postgresql" || "$DATABASE_PROVIDER" == "mysql" ]]; then
-    export DATABASE_URL
+    # Exporta a variável DATABASE_URL
+    export DATABASE_URL="$DATABASE_CONNECTION_URI"
     echo "Deploying migrations for $DATABASE_PROVIDER"
     echo "Database URL: $DATABASE_URL"
-    # rm -rf ./prisma/migrations
-    # cp -r ./prisma/$DATABASE_PROVIDER-migrations ./prisma/migrations
+
+    # Aplica as migrações do Prisma
     npm run db:deploy
     if [ $? -ne 0 ]; then
         echo "Migration failed"
@@ -19,6 +23,8 @@ if [[ "$DATABASE_PROVIDER" == "postgresql" || "$DATABASE_PROVIDER" == "mysql" ]]
     else
         echo "Migration succeeded"
     fi
+
+    # Gera o schema do Prisma
     npm run db:generate
     if [ $? -ne 0 ]; then
         echo "Prisma generate failed"
