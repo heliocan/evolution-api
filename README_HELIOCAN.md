@@ -94,3 +94,7 @@ sudo certbot --apache
 # Altere o .env
 
 Armazenado em cofre como ".env evolution-api devcan"
+
+# Acessando 
+
+http://evo.devcan.one/manager
