@@ -71,4 +71,4 @@ sudo certbot --apache
 
 # Altere o .env
 
-Armazenado em cofre como ""
+Armazenado em cofre como ".env evolution-api devcan"
