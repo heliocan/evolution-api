@@ -2,20 +2,24 @@ version: '3.3'
 
 services:
   postgres:
-    container_name: postgres
-    image: postgres:15
+    container_name: postgres-evo
+    image: postgres:17.5
     networks:
       - evolution-net
-    command: ["postgres", "-c", "max_connections=1000"]
+    command: ["postgres", "-c", "max_connections=1000", "-c", "listen_addresses=*"]
     restart: always
     ports:
-      - 5432:5432
+      - 5434:5432  # <--- Porta externa para não conflitar
     environment:
-      - POSTGRES_PASSWORD=PASSWORD
+      - POSTGRES_USER=usuario_evo
+      - POSTGRES_PASSWORD=senha_evo
+      - POSTGRES_DB=evolution
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - postgres_data:/var/lib/postgresql/data
     expose:
       - 5432
+
 
   pgadmin:
     image: dpage/pgadmin4:latest
