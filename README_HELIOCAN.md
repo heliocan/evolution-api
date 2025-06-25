@@ -49,6 +49,16 @@ Da raiz do projeto, suba os serviços:
 docker-compose up -d --build
 ```
 
+## Para destruir
+
+```shell
+docker-compose down --remove-orphans
+```
+
+Postgres data
+```shell
+sudo rm -r postgres_data/
+```
 
 # Domínio Apache
 
