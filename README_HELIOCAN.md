@@ -28,6 +28,28 @@ Crie uma branch auxiliar para seus objetivos, mantendo sua main isolada
 git checkout -b lenovo
 ```
 
+## Em outra máquina 
+Depois de terminado edição em branch específica
+
+```shell
+git clone <URL_DO_REPOSITORIO>
+cd evolution-api
+git checkout lenovo
+```
+
+Crie o novo .env
+```shell
+nano .env
+```
+
+# Docker Build
+
+Da raiz do projeto, suba os serviços:
+```shell
+docker-compose up -d --build
+```
+
+
 # Domínio Apache
 
 Criando virtual host

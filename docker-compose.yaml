@@ -30,28 +30,27 @@ services:
       - 6379:6379
 
   postgres:
-    container_name: postgres
-    image: postgres:15
+    container_name: postgres-evo
+    image: postgres:17.5
     networks:
       - evolution-net
     command: ["postgres", "-c", "max_connections=1000", "-c", "listen_addresses=*"]
     restart: always
     ports:
-      - 5432:5432
+      - 5434:5432  # porta externa alterada
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=pass
-      - POSTGRES_DB=evolution
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
     expose:
       - 5432
 
 volumes:
   evolution_instances:
   evolution_redis:
-  postgres_data:
 
 
 networks:
