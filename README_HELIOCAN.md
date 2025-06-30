@@ -60,6 +60,20 @@ Postgres data
 sudo rm -r postgres_data/
 ```
 
+## Comparando com MAIN
+
+Fazer comparação entre a sua branch específica e main
+
+Arquivos
+```shell
+git diff --stat main..lenovo
+```
+
+Por linhas
+```shell
+git diff main..lenovo
+```
+
 # Domínio Apache
 
 Criando virtual host

@@ -1,4 +1,16 @@
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123
+    ports:
+      - 5672:5672
+      - 15672:15672  # painel web opcional
+    networks:
+      - evolution-net
+
   api:
     container_name: evolution_api
     image: evoapicloud/evolution-api:latest
