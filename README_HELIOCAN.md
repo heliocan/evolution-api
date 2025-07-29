@@ -87,8 +87,8 @@ Conteúdo:
     ServerName evo.devcan.one
 
     ProxyPreserveHost On
-    ProxyPass / http://localhost:8080/manager/
-    ProxyPassReverse / http://localhost:8080/manager/
+    ProxyPass / http://localhost:8080/
+    ProxyPassReverse / http://localhost:8080/
 
     RewriteEngine on
     RewriteCond %{SERVER_NAME} =evo.devcan.one
