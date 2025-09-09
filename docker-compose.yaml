@@ -28,6 +28,9 @@ services:
       - .env
     expose:
       - 8080
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
 
   redis:
     image: redis:latest
@@ -38,8 +41,7 @@ services:
       redis-server --port 6379 --appendonly yes
     volumes:
       - evolution_redis:/data
-    ports:
-      - 6379:6379
+    ports: []
 
   postgres:
     container_name: postgres-evo
