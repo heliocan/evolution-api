@@ -4,29 +4,11 @@ services:
     image: rabbitmq:management
     restart: always
     environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER:-admin}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS:-admin123}
-    # Porta 5672 não precisa ser exposta no host (uso interno)
-    # Painel web será exposto via Traefik
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
     networks:
       - evolution-internal
-      - traefik
-    labels:
-      - traefik.enable=true
-      
-      # HTTP -> HTTPS para painel RabbitMQ
-      - traefik.http.routers.rabbitmq-http.rule=Host(`${RABBITMQ_DOMAIN}`)
-      - traefik.http.routers.rabbitmq-http.entrypoints=web
-      - traefik.http.routers.rabbitmq-http.middlewares=https-only@file
-      
-      # HTTPS para painel RabbitMQ
-      - traefik.http.routers.rabbitmq.rule=Host(`${RABBITMQ_DOMAIN}`)
-      - traefik.http.routers.rabbitmq.entrypoints=websecure
-      - traefik.http.routers.rabbitmq.tls.certresolver=myresolver
-      - traefik.docker.network=traefik
-      
-      # Porta do painel web
-      - traefik.http.services.rabbitmq.loadbalancer.server.port=15672
+    # Sem exposição de portas - uso interno apenas
 
   api:
     container_name: evolution_api
@@ -68,9 +50,10 @@ services:
       redis-server --port 6379 --appendonly yes
     volumes:
       - evolution_redis:/data
+    ports:
+      - "${REDIS_EVO_HOST_PORT}:6379"
     networks:
       - evolution-internal
-    # Remover expose/ports - uso apenas interno
 
   postgres:
     container_name: postgres_evolution
@@ -83,9 +66,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_evolution_data:/var/lib/postgresql/data
-    # Porta externa opcional para debug/admin
     ports:
-      - "${POSTGRES_EVO_HOST_PORT:-5434}:5432"
+      - "${POSTGRES_EVO_HOST_PORT}:5432"
     networks:
       - evolution-internal
 
