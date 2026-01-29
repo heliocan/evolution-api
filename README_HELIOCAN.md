@@ -78,20 +78,20 @@ git diff main..lenovo
 
 Criando virtual host
 ```shell
-sudo nano /etc/apache2/sites-available/evo.devcan.one.conf
+sudo nano /etc/apache2/sites-available/evo.domnio.com.conf
 ```
 
 Conteúdo:
 ```shell
 <VirtualHost *:80>
-    ServerName evo.devcan.one
+    ServerName evo.domnio.com
 
     ProxyPreserveHost On
     ProxyPass / http://localhost:8080/
     ProxyPassReverse / http://localhost:8080/
 
     RewriteEngine on
-    RewriteCond %{SERVER_NAME} =evo.devcan.one
+    RewriteCond %{SERVER_NAME} =evo.domnio.com
     RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
 
     ErrorLog ${APACHE_LOG_DIR}/evo.devcan_error.log
@@ -102,7 +102,7 @@ Conteúdo:
 Habilita o site:
 
 ```bash
-sudo a2ensite evo.devcan.one.conf
+sudo a2ensite evo.domnio.com.conf
 ```
 
 Reinicia o Apache:
@@ -121,4 +121,4 @@ Armazenado em cofre como ".env evolution-api devcan"
 
 # Acessando 
 
-http://evo.devcan.one/manager
+http://evo.domnio.com/manager
